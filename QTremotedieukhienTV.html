@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QTremotedieukhienTV</title>
+</head>
+<input type="button" onclick="power()" value="On/Off">
+<input type="button" onclick="setChannel()" value="Chuyển Kênh">
+<input type="button" onclick="increase()" value="Tăng">
+<input type="button" onclick="decrease()" value="Giảm">
+<body>
+<script>
+    let Television=function (channel,volume,status) {
+        this.channel=channel;
+        this.volume=volume;
+        this.status=status;
+
+        this.getChannel=function () {
+            return this.channel;
+        };
+        this.getVolume=function () {
+            return this.volume;
+        };
+        this.getStatus=function () {
+            return this.status;
+        };
+        this.setChannel=function (channel) {
+            this.channel= channel;
+        };
+        this.setVolumeUp=function () {
+            this.volume+=2;
+        };
+        this.setVolumeDown=function () {
+            this.volume-=2;
+        };
+        this.turnOff=function () {
+            if(this.status){
+                this.status=false;
+            }
+        };
+        this.turnOn=function () {
+            if(!this.status){
+                this.status=true;
+            }
+        };
+    };
+
+    let Remote=function () {
+        this.setChannel=function(television,channel){
+            television.setChannel(channel);
+        };
+        this.setVolumeUp=function (television) {
+            television.setVolumeUp();
+        };
+        this.setVolumeDown=function (television) {
+            television.setVolumeDown();
+        };
+        this.setOnOff=function (television) {
+            if(television.getStatus()){
+                television.turnOff();
+            }else if(!television.getStatus()){
+                television.turnOn();
+            }
+        }
+    };
+
+    let television= new Television("1", 20, false);
+    let remote=new Remote();
+
+    console.log(television);
+    television.turnOn();
+    console.log(television.getStatus());
+    television.setChannel("7");
+    console.log(television.getChannel());
+    
+    function power() {
+        remote.setOnOff(television);
+        console.log(television.getStatus());
+    }
+    function increase() {
+        remote.setVolumeUp(television);
+            console.log(television.getVolume());
+    }
+    function decrease() {
+        remote.setVolumeDown(television);
+        console.log(television.getVolume());
+    }
+    function setChannel() {
+        let channel=prompt("Nhập vào đây kênh muốn chuyển");
+        remote.setChannel(television, channel);
+        console.log(television.getChannel());
+    }
+</script>
+</body>
+</html>
